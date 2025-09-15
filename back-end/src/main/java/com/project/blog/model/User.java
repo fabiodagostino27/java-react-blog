@@ -1,9 +1,13 @@
 package com.project.blog.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,6 +25,9 @@ public class User {
     @Size(min = 6, message = "The password must be at least 6 characters long.")
     @NotBlank(message = "The password cannot be blank, empty or null.")
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Post> posts;
 
     public Integer getId() {
         return this.id;
