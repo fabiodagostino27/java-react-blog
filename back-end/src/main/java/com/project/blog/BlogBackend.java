@@ -1,13 +1,13 @@
-package com.project.project1;
+package com.project.blog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Project1Application {
+public class BlogBackend {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Project1Application.class, args);
+		SpringApplication.run(BlogBackend.class, args);
 	}
 
 }
