@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.blog.dto.UserRegistrationDto;
-import com.project.blog.model.User;
 import com.project.blog.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +22,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> postMethodName(@RequestBody UserRegistrationDto userRegistrationDto) {
-        User user = userService.saveUser(userRegistrationDto);
-        return new ResponseEntity<>("User registrato con successo!", HttpStatus.CREATED);
+        try {
+            userService.saveUser(userRegistrationDto);
+            return new ResponseEntity<>("User registrato con successo!", HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
     
 }
