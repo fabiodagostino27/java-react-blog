@@ -1,16 +1,11 @@
 package com.project.blog.model;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,31 +18,25 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "posts")
-public class Post {
+@Table(name = "comments")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "The username cannot be blank, empty or null.")
-    private String title;
-
     @Lob
-    @NotBlank(message = "The post text content cannot be blank, empty or null.")
-    private String textContent;
-
-    private String imgPath;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
+    @NotBlank(message = "The comment text content cannot be blank, empty or null.")
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-    private List<Comment> comments;
+    @ManyToOne
+    @JoinColumn(name = "post_id", nullable = false)
+    @JsonBackReference
+    private Post post;
 
     public Integer getId() {
         return this.id;
@@ -57,27 +46,28 @@ public class Post {
         this.id = id;
     }
 
-    public String getTitle() {
-        return this.title;
+    public String getContent() {
+        return this.content;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getTextContent() {
-        return this.textContent;
+    public User getUser() {
+        return this.user;
     }
 
-    public void setTextContent(String textContent) {
-        this.textContent = textContent;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getImgPath() {
-        return this.imgPath;
+    public Post getPost() {
+        return this.post;
     }
 
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
+    public void setPost(Post post) {
+        this.post = post;
     }
+    
 }
