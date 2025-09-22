@@ -38,6 +38,8 @@ public class Post {
 
     private String imgPath;
 
+    private int score;
+
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -80,4 +82,37 @@ public class Post {
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
+
+    public int getScore() {
+        return this.score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Comment> getComments() {
+        return this.comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
 }
