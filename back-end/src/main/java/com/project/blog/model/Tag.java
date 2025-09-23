@@ -22,7 +22,7 @@ public class Tag {
     private String name;
 
     @NotBlank(message = "The color cannot be null, empty or blank")
-    private String bootstrapColor;
+    private String color;
 
     @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
     private List<Post> posts;
@@ -43,12 +43,12 @@ public class Tag {
         this.name = name;
     }
 
-    public String getBootstrapColor() {
-        return this.bootstrapColor;
+    public String getColor() {
+        return this.color;
     }
 
-    public void setBootstrapColor(String bootstrapColor) {
-        this.bootstrapColor = bootstrapColor;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public List<Post> getPosts() {
