@@ -1,5 +1,6 @@
 package com.project.blog.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class PostService {
 
     public Optional<Post> findById(Integer id) {
         return postRepository.findById(id);
+    }
+
+    public List<Post> findNewest() {
+        return postRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    public List<Post> findOldest() {
+        return postRepository.findAllByOrderByCreatedAt();
     }
 
     public Post create(PostCreationDTO postCreationDTO) {

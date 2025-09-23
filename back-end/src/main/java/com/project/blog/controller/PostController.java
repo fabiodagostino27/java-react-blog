@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -35,6 +37,15 @@ public class PostController {
         Optional<Post> postAttempt = postService.findById(id);
         if (postAttempt.isEmpty()) return new ResponseEntity<>("Post non trovato!", HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(postAttempt.get(), HttpStatus.OK);
+    }
+    
+    @GetMapping
+    public ResponseEntity<?> indexRecent(@RequestParam String sort) {
+        if (sort.equals("") || sort.equals("desc")) {
+            return new ResponseEntity<>(postService.findNewest(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(postService.findOldest(), HttpStatus.OK);
+        }
     }
     
 
