@@ -25,6 +25,10 @@ public class PostService {
     @Autowired
     private TagRepository tagRepository;
 
+    public Optional<Post> findById(Integer id) {
+        return postRepository.findById(id);
+    }
+
     public Post create(PostCreationDTO postCreationDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

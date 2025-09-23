@@ -2,6 +2,8 @@ package com.project.blog.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +27,7 @@ public class Tag {
     private String color;
 
     @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<Post> posts;
 
     public Integer getId() {
