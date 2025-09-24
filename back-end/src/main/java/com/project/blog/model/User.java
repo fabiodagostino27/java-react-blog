@@ -40,6 +40,9 @@ public class User {
     @JoinTable(name = "role_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Vote> votes;
+
     public Integer getId() {
         return this.id;
     }
