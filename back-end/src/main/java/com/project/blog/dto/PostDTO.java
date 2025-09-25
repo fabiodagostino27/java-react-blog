@@ -1,9 +1,11 @@
 package com.project.blog.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.project.blog.model.Comment;
 import com.project.blog.model.Post;
-import com.project.blog.model.User;
 
 public class PostDTO {
     private Integer id;
@@ -13,15 +15,21 @@ public class PostDTO {
     private int score;
     private LocalDateTime createdAt;
     private UserDTO user;
+    private List<CommentDTO> comments;
     
-    public PostDTO(Post post, User user) {
+    public PostDTO(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.textContent = post.getTextContent();
         this.imgPath = post.getImgPath();
         this.score = post.getScore();
         this.createdAt = post.getCreatedAt();
-        this.user = new UserDTO(user);
+        this.user = new UserDTO(post.getUser());
+        this.comments = new ArrayList<>();
+
+        for (Comment comment : post.getComments()) {
+            comments.add(new CommentDTO(comment));
+        }
     }
 
     public Integer getId() {
@@ -78,5 +86,13 @@ public class PostDTO {
 
     public void setUser(UserDTO user) {
         this.user = user;
+    }
+
+    public List<CommentDTO> getComments() {
+        return this.comments;
+    }
+
+    public void setComments(List<CommentDTO> comments) {
+        this.comments = comments;
     }
 }

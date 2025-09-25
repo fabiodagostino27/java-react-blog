@@ -31,10 +31,7 @@ public class PostService {
         Optional<Post> postAttempt = postRepository.findById(id);
         if (postAttempt.isEmpty()) throw new RuntimeException("Post non trovato.");
 
-        Optional<User> userAttempt = userRepository.findById(postAttempt.get().getUser().getId());
-        if (userAttempt.isEmpty())throw new RuntimeException("User non trovato.");
-
-        return new PostDTO(postAttempt.get(), userAttempt.get());
+        return new PostDTO(postAttempt.get());
     }
 
     public List<Post> findNewest() {

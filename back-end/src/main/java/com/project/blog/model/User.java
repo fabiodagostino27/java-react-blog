@@ -32,6 +32,9 @@ public class User {
     @NotBlank(message = "The password cannot be blank, empty or null.")
     private String password;
 
+    @NotBlank(message = "The profile picture's image path cannot be empty, null or blank.")
+    private String pfpPath;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Post> posts;
 
