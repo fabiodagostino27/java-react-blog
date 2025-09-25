@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.project.blog.dto.PostCreationDTO;
+import com.project.blog.dto.PostDTO;
 import com.project.blog.model.Post;
 import com.project.blog.model.User;
 import com.project.blog.repo.PostRepository;
@@ -26,8 +27,14 @@ public class PostService {
     @Autowired
     private TagRepository tagRepository;
 
-    public Optional<Post> findById(Integer id) {
-        return postRepository.findById(id);
+    public PostDTO findById(Integer id) {
+        Optional<Post> postAttempt = postRepository.findById(id);
+        if (postAttempt.isEmpty()) throw new RuntimeException("Post non trovato.");
+
+        Optional<User> userAttempt = userRepository.findById(postAttempt.get().getUser().getId());
+        if (userAttempt.isEmpty())throw new RuntimeException("User non trovato.");
+
+        return new PostDTO(postAttempt.get(), userAttempt.get());
     }
 
     public List<Post> findNewest() {

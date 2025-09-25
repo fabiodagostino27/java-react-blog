@@ -34,9 +34,11 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Integer id) {
-        Optional<Post> postAttempt = postService.findById(id);
-        if (postAttempt.isEmpty()) return new ResponseEntity<>("Post non trovato!", HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(postAttempt.get(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(postService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
     
     @GetMapping
