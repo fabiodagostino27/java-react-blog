@@ -75,4 +75,13 @@ public class CommentDTO {
     public void setUser(UserDTO user) {
         this.user = user;
     }
+
+    public List<ReplyDTO> getReplies() {
+        return this.replies;
+    }
+
+    public void setReplies(List<ReplyDTO> replies) {
+        this.replies = replies;
+    }
+
 }
