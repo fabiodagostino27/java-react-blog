@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import com.project.blog.dto.ReplyCreationDTO;
 import com.project.blog.model.Comment;
@@ -14,6 +15,7 @@ import com.project.blog.repo.CommentRepository;
 import com.project.blog.repo.ReplyRepository;
 import com.project.blog.repo.UserRepository;
 
+@Service
 public class ReplyService {
     @Autowired
     private ReplyRepository replyRepository;
