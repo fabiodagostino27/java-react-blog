@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -26,6 +27,7 @@ public class Reply {
     private Integer id;
 
     @Lob
+    @NotBlank(message = "The reply's content cnnot be null, empty or blank.")
     private String content;
 
     private int score;
@@ -34,6 +36,11 @@ public class Reply {
     @JoinColumn(name = "comment_id", nullable = false)
     @JsonBackReference
     private Comment comment;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -78,4 +85,11 @@ public class Reply {
         this.createdAt = createdAt;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

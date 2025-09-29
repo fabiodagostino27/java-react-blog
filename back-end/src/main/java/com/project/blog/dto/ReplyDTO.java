@@ -1,39 +1,22 @@
 package com.project.blog.dto;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
-import com.project.blog.model.Comment;
 import com.project.blog.model.Reply;
 
-public class CommentDTO {
+public class ReplyDTO {
     private Integer id;
     private String content;
     private int score;
     private LocalDateTime createdAt;
     private UserDTO user;
-    private List<ReplyDTO> replies;
 
-    public CommentDTO(Comment comment) {
-        this.id = comment.getId();
-        this.content = comment.getContent();
-        this.score = comment.getScore();
-        this.createdAt = comment.getCreatedAt();
-        this.user = new UserDTO(comment.getUser());
-
-        List<ReplyDTO> orderedList = new ArrayList<>();
-        for (Reply reply : comment.getReplies()) {
-            orderedList.add(new ReplyDTO(reply));
-        }
-        orderedList.sort(new Comparator<ReplyDTO>() {
-            @Override
-            public int compare(ReplyDTO r1, ReplyDTO r2) {
-                return r1.getCreatedAt().compareTo(r2.getCreatedAt());
-            }
-        });
-        this.replies = orderedList;
+    public ReplyDTO(Reply reply) {
+        this.id = reply.getId();
+        this.content = reply.getContent();
+        this.score = reply.getScore();
+        this.createdAt = reply.getCreatedAt();
+        this.user = new UserDTO(reply.getUser());
     }
 
     public Integer getId() {
