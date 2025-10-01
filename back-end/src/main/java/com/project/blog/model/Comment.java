@@ -51,6 +51,9 @@ public class Comment {
     @OneToMany(mappedBy = "comment", fetch = FetchType.EAGER)
     private List<Reply> replies;
 
+    @OneToMany(mappedBy = "comment", fetch = FetchType.EAGER)
+    private List<Vote> votes;
+
     public Integer getId() {
         return this.id;
     }
@@ -107,4 +110,11 @@ public class Comment {
         this.replies = replies;
     }
 
+    public List<Vote> getVotes() {
+        return this.votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
+    }
 }

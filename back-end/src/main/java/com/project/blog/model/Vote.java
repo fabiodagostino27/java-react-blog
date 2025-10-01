@@ -1,6 +1,7 @@
 package com.project.blog.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -8,7 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "votes")
@@ -17,18 +17,24 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "The vote's type cannot be empty, null or blank")
+    private String type;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @NotNull(message = "The entity id cannot be null.")
-    private Integer entityId; 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post; 
 
-    @NotBlank(message = "The entity type cannot be blank, null or empty")
-    private String entityType; 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
-    @NotBlank(message = "The vote type cannot be blank, null or empty")
-    private String type;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reply_id")
+    private Reply reply;
 
     public Integer getId() {
         return this.id;
@@ -46,22 +52,6 @@ public class Vote {
         this.user = user;
     }
 
-    public Integer getEntityId() {
-        return this.entityId;
-    }
-
-    public void setEntityId(Integer entityId) {
-        this.entityId = entityId;
-    }
-
-    public String getEntityType() {
-        return this.entityType;
-    }
-
-    public void setEntityType(String entityType) {
-        this.entityType = entityType;
-    }
-
     public String getType() {
         return this.type;
     }
@@ -69,6 +59,29 @@ public class Vote {
     public void setType(String type) {
         this.type = type;
     }
-    
+
+    public Post getPost() {
+        return this.post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public Comment getComment() {
+        return this.comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
+    public Reply getReply() {
+        return this.reply;
+    }
+
+    public void setReply(Reply reply) {
+        this.reply = reply;
+    }    
 }
 
