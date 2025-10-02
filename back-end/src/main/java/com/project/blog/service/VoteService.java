@@ -43,6 +43,12 @@ public class VoteService {
         if (userAttempt.isEmpty())
             throw new RuntimeException("User non trovato.");
         User user = userAttempt.get();
+        if (voteCreationDTO.getType().equals("POST")) findOrCreatePostVote(user, voteCreationDTO);
+        else if (voteCreationDTO.getType().equals("COMMENT")) findOrCreateCommentVote(user, voteCreationDTO);
+        else if (voteCreationDTO.getType().equals("REPLY")) findOrCreateReplyVote(user, voteCreationDTO);
+        else {
+            throw new RuntimeException("Qualcosa è andato storto!");
+        }
     }
 
     public void findOrCreatePostVote(User user, VoteCreationDTO voteCreationDTO) {
