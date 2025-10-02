@@ -8,7 +8,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.project.blog.dto.VoteCreationDTO;
+import com.project.blog.model.Comment;
 import com.project.blog.model.Post;
+import com.project.blog.model.Reply;
 import com.project.blog.model.User;
 import com.project.blog.model.Vote;
 import com.project.blog.repo.CommentRepository;
@@ -76,12 +78,102 @@ public class VoteService {
             vote.setType(voteCreationDTO.getType());
             vote.setUser(user);
             if (voteCreationDTO.getType().equals("UPVOTE")) {
-                post.setScore(post.getScore() - 1);
-            } else {
                 post.setScore(post.getScore() + 1);
+            } else {
+                post.setScore(post.getScore() - 1);
             }
             voteRepository.save(vote);
             postRepository.save(post);
+        }
+    }
+
+    public void findOrCreateCommentVote(User user, VoteCreationDTO voteCreationDTO) {
+        Optional<Comment> commentAttempt = commentRepository.findById(voteCreationDTO.getEntityId());
+        if (commentAttempt.isEmpty())
+            throw new RuntimeException("Commento non trovato!");
+        Comment comment = commentAttempt.get();
+        if (user.equals(comment.getUser()))
+            throw new RuntimeException("Non puoi votare il tuo stesso commento!");
+
+        Optional<Vote> existingVote = voteRepository.findByUserAndComment(user, comment);
+        if (existingVote.isPresent()) {
+            if (existingVote.get().getType().equals(voteCreationDTO.getType())) {
+                if (voteCreationDTO.getType().equals("UPVOTE")) {
+                    comment.setScore(comment.getScore() - 1);
+                } else { 
+                    comment.setScore(comment.getScore() + 1);
+                }
+                commentRepository.save(comment);
+                voteRepository.delete(existingVote.get());
+            } else {
+                if (voteCreationDTO.getType().equals("UPVOTE")) {
+                    comment.setScore(comment.getScore() + 2);
+                } else {
+                    comment.setScore(comment.getScore() - 2);
+                }
+                existingVote.get().setType(voteCreationDTO.getType());
+                voteRepository.save(existingVote.get());
+                commentRepository.save(comment);
+            }
+        } else {
+            Vote vote = new Vote();
+            vote.setComment(comment);
+            vote.setType(voteCreationDTO.getType());
+            vote.setUser(user);
+
+            if (voteCreationDTO.getType().equals("UPVOTE")) {
+                comment.setScore(comment.getScore() + 1);
+            } else {
+                comment.setScore(comment.getScore() - 1);
+            }
+            voteRepository.save(vote);
+            commentRepository.save(comment);
+        }
+    }
+
+        public void findOrCreateReplyVote(User user, VoteCreationDTO voteCreationDTO) {
+        Optional<Reply> replyAttempt = replyRepository.findById(voteCreationDTO.getEntityId());
+        if (replyAttempt.isEmpty())
+            throw new RuntimeException("Risposta non trovata!");
+        Reply reply = replyAttempt.get();
+        if (user.equals(reply.getUser()))
+            throw new RuntimeException("Non puoi votare la tua stessa risposta!");
+        
+        Optional<Vote> existingVote = voteRepository.findByUserAndReply(user, reply);
+
+        if (existingVote.isPresent()) {
+            if (existingVote.get().getType().equals(voteCreationDTO.getType())) {
+                if (voteCreationDTO.getType().equals("UPVOTE")) {
+                    reply.setScore(reply.getScore() - 1);
+                } else {
+                    reply.setScore(reply.getScore() + 1);
+                }
+                replyRepository.save(reply);
+                voteRepository.delete(existingVote.get());
+            } else {
+                if (voteCreationDTO.getType().equals("UPVOTE")) {
+                    reply.setScore(reply.getScore() + 2);
+                } else {
+                    reply.setScore(reply.getScore() - 2);
+                }
+                existingVote.get().setType(voteCreationDTO.getType());
+                voteRepository.save(existingVote.get());
+                replyRepository.save(reply);
+            }
+        } else {
+            Vote vote = new Vote();
+            vote.setReply(reply);
+            vote.setType(voteCreationDTO.getType());
+            vote.setUser(user);
+            
+            if (voteCreationDTO.getType().equals("UPVOTE")) {
+                reply.setScore(reply.getScore() + 1);
+            } else {
+                reply.setScore(reply.getScore() - 1);
+            }
+            
+            voteRepository.save(vote);
+            replyRepository.save(reply);
         }
     }
 }
