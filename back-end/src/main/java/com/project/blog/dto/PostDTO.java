@@ -16,8 +16,9 @@ public class PostDTO {
     private LocalDateTime createdAt;
     private UserDTO user;
     private List<CommentDTO> comments;
+    private String currentUserVoteType;
     
-    public PostDTO(Post post) {
+    public PostDTO(Post post, String voteType) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.textContent = post.getTextContent();
@@ -25,6 +26,7 @@ public class PostDTO {
         this.score = post.getScore();
         this.createdAt = post.getCreatedAt();
         this.user = new UserDTO(post.getUser());
+        this.currentUserVoteType = voteType;
         this.comments = new ArrayList<>();
 
         for (Comment comment : post.getComments()) {
@@ -95,4 +97,13 @@ public class PostDTO {
     public void setComments(List<CommentDTO> comments) {
         this.comments = comments;
     }
+
+    public String getCurrentUserVoteType() {
+        return this.currentUserVoteType;
+    }
+
+    public void setCurrentUserVoteType(String currentUserVoteType) {
+        this.currentUserVoteType = currentUserVoteType;
+    }
+
 }

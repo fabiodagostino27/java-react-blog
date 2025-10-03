@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,11 @@ import com.project.blog.dto.PostCreationDTO;
 import com.project.blog.dto.PostDTO;
 import com.project.blog.model.Post;
 import com.project.blog.model.User;
+import com.project.blog.model.Vote;
 import com.project.blog.repo.PostRepository;
 import com.project.blog.repo.TagRepository;
 import com.project.blog.repo.UserRepository;
+import com.project.blog.repo.VoteRepository;
 
 @Service
 public class PostService {
@@ -27,11 +30,39 @@ public class PostService {
     @Autowired
     private TagRepository tagRepository;
 
+    @Autowired
+    private VoteRepository voteRepository;
+
     public PostDTO findById(Integer id) {
         Optional<Post> postAttempt = postRepository.findById(id);
-        if (postAttempt.isEmpty()) throw new RuntimeException("Post non trovato.");
+        if (postAttempt.isEmpty()) {
+            throw new RuntimeException("Post non trovato.");
+        }
+        Post post = postAttempt.get();
+        String currentUserVoteType = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = authentication != null
+                && authentication.isAuthenticated()
+                && !(authentication instanceof AnonymousAuthenticationToken);
 
-        return new PostDTO(postAttempt.get());
+        if (isAuthenticated) {
+            String username = authentication.getName();
+            Optional<User> userAttempt = userRepository.findByUsername(username);
+
+            if (userAttempt.isEmpty()) {
+                throw new RuntimeException("User autenticato non trovato.");
+            }
+
+            User user = userAttempt.get();
+
+            Optional<Vote> existingVote = voteRepository.findByUserAndPost(user, post);
+
+            if (existingVote.isPresent()) {
+                currentUserVoteType = existingVote.get().getType();
+            }
+        }
+
+        return new PostDTO(post, currentUserVoteType);
     }
 
     public List<Post> findNewest() {
