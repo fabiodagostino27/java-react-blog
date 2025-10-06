@@ -15,25 +15,15 @@ public class CommentDTO {
     private LocalDateTime createdAt;
     private UserDTO user;
     private List<ReplyDTO> replies;
+    private String currentUserVoteType;
 
-    public CommentDTO(Comment comment) {
+    public CommentDTO(Comment comment, String voteType) {
         this.id = comment.getId();
         this.content = comment.getContent();
         this.score = comment.getScore();
         this.createdAt = comment.getCreatedAt();
         this.user = new UserDTO(comment.getUser());
-
-        List<ReplyDTO> orderedList = new ArrayList<>();
-        for (Reply reply : comment.getReplies()) {
-            orderedList.add(new ReplyDTO(reply));
-        }
-        orderedList.sort(new Comparator<ReplyDTO>() {
-            @Override
-            public int compare(ReplyDTO r1, ReplyDTO r2) {
-                return r1.getCreatedAt().compareTo(r2.getCreatedAt());
-            }
-        });
-        this.replies = orderedList;
+        this.currentUserVoteType = voteType;
     }
 
     public Integer getId() {
@@ -82,6 +72,14 @@ public class CommentDTO {
 
     public void setReplies(List<ReplyDTO> replies) {
         this.replies = replies;
+    }
+
+    public String getCurrentUserVoteType() {
+        return this.currentUserVoteType;
+    }
+
+    public void setCurrentUserVoteType(String currentUserVoteType) {
+        this.currentUserVoteType = currentUserVoteType;
     }
 
 }

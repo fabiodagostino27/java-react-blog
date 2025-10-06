@@ -27,11 +27,6 @@ public class PostDTO {
         this.createdAt = post.getCreatedAt();
         this.user = new UserDTO(post.getUser());
         this.currentUserVoteType = voteType;
-        this.comments = new ArrayList<>();
-
-        for (Comment comment : post.getComments()) {
-            comments.add(new CommentDTO(comment));
-        }
     }
 
     public Integer getId() {
