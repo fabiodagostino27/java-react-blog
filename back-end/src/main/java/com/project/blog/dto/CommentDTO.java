@@ -2,20 +2,18 @@ package com.project.blog.dto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import com.project.blog.model.Comment;
-import com.project.blog.model.Reply;
 
 public class CommentDTO {
     private Integer id;
     private String content;
     private int score;
     private LocalDateTime createdAt;
-    private UserDTO user;
-    private List<ReplyDTO> replies;
     private String currentUserVoteType;
+    private UserDTO user;
+    private List<ReplyDTO> replies = new ArrayList<>();
 
     public CommentDTO(Comment comment, String voteType) {
         this.id = comment.getId();

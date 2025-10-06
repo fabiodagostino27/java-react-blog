@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.project.blog.model.Comment;
 import com.project.blog.model.Post;
 
 public class PostDTO {
@@ -14,9 +13,9 @@ public class PostDTO {
     private String imgPath;
     private int score;
     private LocalDateTime createdAt;
-    private UserDTO user;
-    private List<CommentDTO> comments;
     private String currentUserVoteType;
+    private UserDTO user;
+    private List<CommentDTO> comments = new ArrayList<>();
     
     public PostDTO(Post post, String voteType) {
         this.id = post.getId();

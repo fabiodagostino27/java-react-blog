@@ -9,8 +9,8 @@ public class ReplyDTO {
     private String content;
     private int score;
     private LocalDateTime createdAt;
-    private UserDTO user;
     private String currentUserVoteType;
+    private UserDTO user;
 
     public ReplyDTO(Reply reply, String voteType) {
         this.id = reply.getId();

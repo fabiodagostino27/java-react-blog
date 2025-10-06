@@ -13,7 +13,6 @@ import com.project.blog.dto.PostCreationDTO;
 import com.project.blog.dto.PostDTO;
 import com.project.blog.model.Post;
 import com.project.blog.model.User;
-import com.project.blog.model.Vote;
 import com.project.blog.repo.PostRepository;
 import com.project.blog.repo.TagRepository;
 import com.project.blog.repo.UserRepository;
@@ -31,7 +30,7 @@ public class PostService {
     private TagRepository tagRepository;
 
     @Autowired
-    private VoteRepository voteRepository;
+    private PostMapperService postMapperService;
 
     public PostDTO findById(Integer id) {
         Optional<Post> postAttempt = postRepository.findById(id);
@@ -39,7 +38,7 @@ public class PostService {
             throw new RuntimeException("Post non trovato.");
         }
         Post post = postAttempt.get();
-        String currentUserVoteType = null;
+        User user = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAuthenticated = authentication != null
                 && authentication.isAuthenticated()
@@ -53,16 +52,10 @@ public class PostService {
                 throw new RuntimeException("User autenticato non trovato.");
             }
 
-            User user = userAttempt.get();
-
-            Optional<Vote> existingVote = voteRepository.findByUserAndPost(user, post);
-
-            if (existingVote.isPresent()) {
-                currentUserVoteType = existingVote.get().getType();
-            }
+            user = userAttempt.get();
         }
 
-        return new PostDTO(post, currentUserVoteType);
+        return postMapperService.mapPostToDTO(post, user);
     }
 
     public List<Post> findNewest() {

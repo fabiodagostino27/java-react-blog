@@ -33,7 +33,10 @@ public class PostMapperService {
         }
 
         PostDTO postDTO = new PostDTO(post, postVoteType);
-
+        for (Comment comment : post.getComments()) {
+            postDTO.getComments().add(mapCommentToDTO(comment, user));
+        }
+        return postDTO;
     }
 
     public CommentDTO mapCommentToDTO(Comment comment, User user) {
