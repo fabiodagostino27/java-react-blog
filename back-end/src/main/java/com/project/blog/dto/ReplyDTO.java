@@ -10,13 +10,15 @@ public class ReplyDTO {
     private int score;
     private LocalDateTime createdAt;
     private UserDTO user;
+    private String currentUserVoteType;
 
-    public ReplyDTO(Reply reply) {
+    public ReplyDTO(Reply reply, String voteType) {
         this.id = reply.getId();
         this.content = reply.getContent();
         this.score = reply.getScore();
         this.createdAt = reply.getCreatedAt();
         this.user = new UserDTO(reply.getUser());
+        this.currentUserVoteType = voteType;
     }
 
     public Integer getId() {
@@ -58,4 +60,13 @@ public class ReplyDTO {
     public void setUser(UserDTO user) {
         this.user = user;
     }
+
+    public String getCurrentUserVoteType() {
+        return this.currentUserVoteType;
+    }
+
+    public void setCurrentUserVoteType(String currentUserVoteType) {
+        this.currentUserVoteType = currentUserVoteType;
+    }
+
 }
