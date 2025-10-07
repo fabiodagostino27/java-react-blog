@@ -16,7 +16,6 @@ import com.project.blog.model.User;
 import com.project.blog.repo.PostRepository;
 import com.project.blog.repo.TagRepository;
 import com.project.blog.repo.UserRepository;
-import com.project.blog.repo.VoteRepository;
 
 @Service
 public class PostService {
