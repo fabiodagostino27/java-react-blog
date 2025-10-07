@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.project.blog.model.Post;
+import com.project.blog.model.Tag;
 
 public class PostDTO {
     private Integer id;
@@ -15,6 +16,7 @@ public class PostDTO {
     private LocalDateTime createdAt;
     private String currentUserVoteType;
     private UserDTO user;
+    private List<Tag> tags;
     private List<CommentDTO> comments = new ArrayList<>();
     
     public PostDTO(Post post, String voteType) {
@@ -26,6 +28,11 @@ public class PostDTO {
         this.createdAt = post.getCreatedAt();
         this.user = new UserDTO(post.getUser());
         this.currentUserVoteType = voteType;
+        this.tags = new ArrayList<>();
+
+        for (Tag tag : post.getTags()) {
+            tags.add(tag);
+        }
     }
 
     public Integer getId() {
@@ -98,6 +105,14 @@ public class PostDTO {
 
     public void setCurrentUserVoteType(String currentUserVoteType) {
         this.currentUserVoteType = currentUserVoteType;
+    }
+
+    public List<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
 }

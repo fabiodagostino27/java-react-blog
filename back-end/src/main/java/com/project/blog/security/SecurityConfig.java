@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/tags/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
