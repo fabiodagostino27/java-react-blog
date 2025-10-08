@@ -1,5 +1,6 @@
 package com.project.blog.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,9 @@ public class TagService {
         Optional<Tag> tagAttempt = tagRepository.findById(id);
         if (tagAttempt.isEmpty()) throw new RuntimeException("Tag non trovato.");
         return new TagDTO(tagAttempt.get());
+    }
+
+    public List<Tag> findByName(String name) {
+        return tagRepository.findByName(name);
     }
 }
