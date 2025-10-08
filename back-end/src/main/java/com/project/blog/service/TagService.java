@@ -22,6 +22,6 @@ public class TagService {
     }
 
     public List<Tag> findByName(String name) {
-        return tagRepository.findByName(name);
+        return tagRepository.findByNameContaining(name);
     }
 }
