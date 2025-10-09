@@ -1,6 +1,8 @@
 package com.project.blog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.blog.dto.PostCreationDTO;
+import com.project.blog.model.Post;
 import com.project.blog.service.PostService;
 
 import jakarta.validation.Valid;
@@ -39,11 +42,11 @@ public class PostController {
     }
     
     @GetMapping
-    public ResponseEntity<?> indexRecent(@RequestParam String sort) {
+    public ResponseEntity<Page<Post>> indexRecent(Pageable pageable, @RequestParam String sort) {
         if (sort.equals("") || sort.equals("desc")) {
-            return new ResponseEntity<>(postService.findNewest(), HttpStatus.OK);
+            return new ResponseEntity<>(postService.findNewest(pageable), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(postService.findOldest(), HttpStatus.OK);
+            return new ResponseEntity<>(postService.findOldest(pageable), HttpStatus.OK);
         }
     }
     
