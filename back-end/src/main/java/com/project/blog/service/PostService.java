@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -57,12 +59,12 @@ public class PostService {
         return postMapperService.mapPostToDTO(post, user);
     }
 
-    public List<Post> findNewest() {
-        return postRepository.findAllByOrderByCreatedAtDesc();
+    public Page<Post> findNewest(Pageable pageable) {
+        return postRepository.findAllByOrderByCreatedAtDesc(pageable);
     }
 
-    public List<Post> findOldest() {
-        return postRepository.findAllByOrderByCreatedAt();
+    public Page<Post> findOldest(Pageable pageable) {
+        return postRepository.findAllByOrderByCreatedAt(pageable);
     }
 
     public Post create(PostCreationDTO postCreationDTO) {
