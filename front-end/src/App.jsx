@@ -1,9 +1,9 @@
 function App() {
-  return (
-    <>
-
-    </>
-  )
+    return (
+        <>
+            <button className="btn btn-primary">test</button>
+        </>
+    )
 }
 
 export default App
