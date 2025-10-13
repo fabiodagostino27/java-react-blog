@@ -1,7 +1,9 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 function App() {
     return (
         <>
-            <button className="btn btn-primary">test</button>
+            
         </>
     )
 }
