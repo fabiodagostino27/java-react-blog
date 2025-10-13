@@ -3,10 +3,9 @@ import { createContext, useContext } from "react";
 const GlobalContext = createContext();
 
 export const GlobalProvider = ({children}) => {
-    const apiUrl = process.env.VITE_API_BASE_URL;
-
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     return (
-        <GlobalContext.Provider value={apiUrl}>
+        <GlobalContext.Provider value={{apiUrl}}>
             {children}
         </GlobalContext.Provider>
     )
