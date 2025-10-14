@@ -6,6 +6,11 @@ export default function LoginForm() {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        
+    }
 
     return (
         <>
