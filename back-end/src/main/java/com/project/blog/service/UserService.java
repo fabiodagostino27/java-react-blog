@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +16,8 @@ import com.project.blog.dto.UserRegistrationDto;
 import com.project.blog.model.Role;
 import com.project.blog.model.User;
 import com.project.blog.repo.UserRepository;
+import com.project.blog.security.DatabaseUserDetails;
+import com.project.blog.security.JwtService;
 import com.project.blog.repo.RoleRepository;
 
 @Service
@@ -26,6 +30,12 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtService jwtService;
 
     public User saveUser(UserRegistrationDto userRegistrationDto) {
         Optional<User> exsistingUser = userRepository.findByUsername(userRegistrationDto.getUsername());
@@ -43,6 +53,15 @@ public class UserService {
         roles.add(roleRepository.findByName("USER"));
         user.setRoles(roles);
         return userRepository.save(user);
+    }
+
+    public String login(UserRegistrationDto loginDto) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        DatabaseUserDetails userDetails = (DatabaseUserDetails) authentication.getPrincipal();
+
+        return jwtService.generateToken(userDetails);
     }
 
     public User updatePfp(String pfpPath) {
