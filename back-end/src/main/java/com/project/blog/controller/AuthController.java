@@ -36,7 +36,7 @@ public class AuthController {
     public ResponseEntity<String> login(@RequestBody UserRegistrationDto loginDto) {
         try {
             String token = userService.login(loginDto);
-            return new ResponseEntity<>(token, HttpStatus.OK)
+            return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Credenziali non valide", HttpStatus.UNAUTHORIZED);
         }

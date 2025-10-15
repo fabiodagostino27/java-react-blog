@@ -23,9 +23,10 @@ export default function LoginForm() {
             })
             .then((response) => {
                 console.log("login effettuato con successo!");
+                localStorage.setItem("token: ", response.data);
             })
             .catch((err) => {
-                console.error(err);
+                console.error(err.response.data);
             })
     }
 
