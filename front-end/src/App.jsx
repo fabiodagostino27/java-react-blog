@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalProvider } from "./contexts/GlobalContext";
 import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 
 function App() {
     return (

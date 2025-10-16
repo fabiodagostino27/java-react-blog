@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
     const { apiUrl } = useGlobalContext();
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,6 +27,7 @@ export default function LoginForm() {
             .then((response) => {
                 console.log("login effettuato con successo!");
                 localStorage.setItem("token", response.data);
+                navigate("/")
             })
             .catch((err) => {
                 console.error(err.response.data);
@@ -44,7 +47,7 @@ export default function LoginForm() {
                     name="password"
                     onChange={(e) => setPassword(e.target.value)} />
 
-                <button>Login</button>    
+                <button>Login</button>
             </form>
 
             <Link to={"/register"} className="btn btn-dark">Non hai un account? registrati qui!</Link>

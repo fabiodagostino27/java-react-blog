@@ -1,7 +1,15 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../contexts/GlobalContext";
+import axios from "axios";
+
 export default function RegisterForm() {
     const { apiUrl } = useGlobalContext();
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,15 +27,26 @@ export default function RegisterForm() {
             })
             .then((response) => {
                 console.log("Registrazione effettuata con successo!");
+                navigate("/login")
             })
             .catch((err) => {
                 console.error(err.response.data);
+                setError(err.response.data);
             })
     }
 
     return (
         <>
             <form onSubmit={handleSubmit}>
+                {
+                    error ?
+                        <div class="alert alert-danger" role="alert">
+                            {error}
+                        </div>
+                    : null    
+                }
+
+
                 <input
                     type="text"
                     name="username"
