@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalProvider } from "./contexts/GlobalContext";
-import LoginForm from "./components/LoginTest";
+import LoginForm from "./components/LoginForm";
 
 function App() {
     return (
@@ -9,6 +9,7 @@ function App() {
                 <GlobalProvider>
                     <Routes>
                         <Route path="login" Component={LoginForm} />
+                        <Route path="register" Component={RegisterForm} />
                     </Routes>
                 </GlobalProvider>
             </BrowserRouter>
