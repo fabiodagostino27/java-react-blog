@@ -2,6 +2,8 @@ package com.project.blog.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +23,8 @@ public class Role {
     @NotBlank(message = "The role's name cannot be blank, null or empty.")
     private String name;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "roles")
+    @JsonBackReference
     private Set<User> users;
 
     public Integer getId() {
