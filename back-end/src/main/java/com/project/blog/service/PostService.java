@@ -1,6 +1,5 @@
 package com.project.blog.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +58,16 @@ public class PostService {
         return postMapperService.mapPostToDTO(post, user);
     }
 
-    public Page<Post> findNewest(Pageable pageable) {
-        return postRepository.findAllByOrderByCreatedAtDesc(pageable);
+    public Page<PostDTO> findNewest(Pageable pageable) {
+        Page<Post> posts = postRepository.findAllByOrderByCreatedAtDesc(pageable);
+        Page<PostDTO> postDtos = posts.map(post -> postMapperService.mapPostToDTO(post, post.getUser()));
+        return postDtos;
     }
 
-    public Page<Post> findOldest(Pageable pageable) {
-        return postRepository.findAllByOrderByCreatedAt(pageable);
+    public Page<PostDTO> findOldest(Pageable pageable) {
+        Page<Post> posts = postRepository.findAllByOrderByCreatedAt(pageable);
+        Page<PostDTO> postDtos = posts.map(post -> postMapperService.mapPostToDTO(post, post.getUser()));
+        return postDtos;
     }
 
     public Post create(PostCreationDTO postCreationDTO) {
