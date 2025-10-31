@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.blog.dto.PostCreationDTO;
-import com.project.blog.dto.PostDTO;
+import com.project.blog.dto.SimplePostDTO;
 import com.project.blog.service.PostService;
 
 import jakarta.validation.Valid;
@@ -42,7 +42,7 @@ public class PostController {
     }
     
     @GetMapping
-    public ResponseEntity<Page<PostDTO>> indexRecent(Pageable pageable, @RequestParam String sort) {
+    public ResponseEntity<Page<SimplePostDTO>> indexRecent(Pageable pageable, @RequestParam String sort) {
         if (sort.equals("") || sort.equals("desc")) {
             return new ResponseEntity<>(postService.findNewest(pageable), HttpStatus.OK);
         } else {

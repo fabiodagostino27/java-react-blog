@@ -10,17 +10,18 @@ export default function HomePage() {
         axios
             .get(apiUrl + "/posts", {
                 params: {
-                    sort: ""
+                    sort: "asc"
                 }
             })
             .then((response) => {
                 setPosts(response.data);
-                console.log(posts)
             })
             .catch((error) => {
                 console.error(error)
             })
     }, [])
+
+    console.log(posts)
 
     return (
         <main className="container">

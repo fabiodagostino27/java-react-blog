@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.blog.dto.PostCreationDTO;
 import com.project.blog.dto.PostDTO;
+import com.project.blog.dto.SimplePostDTO;
 import com.project.blog.model.Post;
 import com.project.blog.model.User;
 import com.project.blog.repo.PostRepository;
@@ -58,15 +59,15 @@ public class PostService {
         return postMapperService.mapPostToDTO(post, user);
     }
 
-    public Page<PostDTO> findNewest(Pageable pageable) {
+    public Page<SimplePostDTO> findNewest(Pageable pageable) {
         Page<Post> posts = postRepository.findAllByOrderByCreatedAtDesc(pageable);
-        Page<PostDTO> postDtos = posts.map(post -> postMapperService.mapPostToDTO(post, post.getUser()));
+        Page<SimplePostDTO> postDtos = posts.map(post -> new SimplePostDTO(post));
         return postDtos;
     }
 
-    public Page<PostDTO> findOldest(Pageable pageable) {
+    public Page<SimplePostDTO> findOldest(Pageable pageable) {
         Page<Post> posts = postRepository.findAllByOrderByCreatedAt(pageable);
-        Page<PostDTO> postDtos = posts.map(post -> postMapperService.mapPostToDTO(post, post.getUser()));
+        Page<SimplePostDTO> postDtos = posts.map(post -> new SimplePostDTO(post));
         return postDtos;
     }
 
