@@ -28,11 +28,18 @@ export default function HomePage() {
     return (
         <main className="container my-4">
             <h1>Nuovi post</h1>
-            {
-                posts.content && posts.content.map((post, index) => {
-                    return <p>{post.title}</p>
-                })
-            }
+            <ul>
+                {
+                    posts.content && posts.content.map((post) => {
+                        return (
+                            <li>
+                                <h4>{post.title}</h4>
+                                <p>by {post.user.username}</p>
+                            </li>
+                        )
+                    })
+                }
+            </ul>
         </main>
     )
 }
