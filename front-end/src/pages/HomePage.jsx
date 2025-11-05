@@ -10,7 +10,9 @@ export default function HomePage() {
         axios
             .get(apiUrl + "/posts", {
                 params: {
-                    sort: "asc"
+                    sort: "createdAt,desc",
+                    size: 3,
+                    page: 0
                 }
             })
             .then((response) => {
@@ -28,8 +30,7 @@ export default function HomePage() {
             <h1>Nuovi post</h1>
             {
                 posts.content && posts.content.map((post, index) => {
-                    if (index <= 2) return <p>{post.title}</p>
-                    else return null
+                    return <p>{post.title}</p>
                 })
             }
         </main>
