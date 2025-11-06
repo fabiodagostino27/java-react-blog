@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import axios from "axios";
+import PostCard from "../components/PostCard";
 
 export default function HomePage() {
     const { apiUrl } = useGlobalContext();
@@ -31,12 +32,7 @@ export default function HomePage() {
             <ul>
                 {
                     posts.content && posts.content.map((post) => {
-                        return (
-                            <li>
-                                <h4>{post.title}</h4>
-                                <p>by {post.user.username}</p>
-                            </li>
-                        )
+                        return <PostCard key={post.id} post={post} />
                     })
                 }
             </ul>
