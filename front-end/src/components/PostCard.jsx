@@ -8,6 +8,15 @@ export default function PostCard({ post }) {
                 <div className="col-md-8">
                     <div className="card-body">
                         <span>{post.user.username}</span>
+
+                        <div>
+                            {
+                                post.tags.map(tag => {
+                                    return <span key={tag.id} class="badge rounded-2 me-1" style={{ backgroundColor: `${tag.color}` }}>{tag.name}</span>
+                                })
+                            }
+                        </div>
+
                         <h5 className="card-title">{post.title}</h5>
                         <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
                         <div className="d-flex gap-2 text-light">
