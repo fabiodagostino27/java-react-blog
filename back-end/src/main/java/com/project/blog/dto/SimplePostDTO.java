@@ -1,8 +1,11 @@
 package com.project.blog.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.project.blog.model.Post;
+import com.project.blog.model.Tag;
 
 public class SimplePostDTO {
     private Integer id;
@@ -12,6 +15,7 @@ public class SimplePostDTO {
     private LocalDateTime createdAt;
     private UserDTO user;
     private int commentsCount;
+    private List<Tag> tags;
 
     public SimplePostDTO(Post post) {
         this.id = post.getId();
@@ -21,6 +25,11 @@ public class SimplePostDTO {
         this.createdAt = post.getCreatedAt();
         this.user = new UserDTO(post.getUser());
         this.commentsCount = post.getComments().size();
+        this.tags = new ArrayList<>();
+
+        for (Tag tag : post.getTags()) {
+            tags.add(tag);
+        }
     }
 
     public Integer getId() {
@@ -77,6 +86,14 @@ public class SimplePostDTO {
 
     public void setCommentsCount(int commentsCount) {
         this.commentsCount = commentsCount;
+    }
+
+    public List<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
 }

@@ -10,14 +10,14 @@ export default function PostCard({ post }) {
                         <span>{post.user.username}</span>
                         <h5 className="card-title">{post.title}</h5>
                         <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
-                        <div className="d-flex gap-2">
-                            <span className="bg-info p-0 rounded-pill d-flex align-items-center gap-1 flex-shrink-1">
-                                <button className="btn btn-info rounded-circle px-2"><i class="bi bi-arrow-up-circle"></i></button>
-                                <span>{post.score}</span>
-                                <button className="btn btn-info rounded-circle px-2"><i class="bi bi-arrow-down-circle"></i></button>
+                        <div className="d-flex gap-2 text-light">
+                            <span className="bg-info p-0 rounded-2 d-flex align-items-center gap-1 flex-shrink-1">
+                                <button className="btn btn-info rounded-2 px-2"><i class="bi bi-arrow-up-circle text-light"></i></button>
+                                <span className="mx-1">{post.score}</span>
+                                <button className="btn btn-info rounded-2 px-2"><i class="bi bi-arrow-down-circle text-light"></i></button>
                             </span>
-                            <span className="btn btn-info rounded-pill d-flex align-items-center gap-1 flex-shrink-1">
-                                <i class="bi bi-chat"></i>
+                            <span className="btn btn-info rounded-2 d-flex align-items-center gap-1 flex-shrink-1 text-light">
+                                <i class="bi bi-chat text-light"></i>
                                 {post.commentsCount}
                             </span>
                         </div>
